@@ -1,0 +1,13 @@
+textarea {width: 100%}
+
+.login {margin-right: 0px; margin-top: 2em}
+
+.menubar {margin: 2em 0em 3em 0em; font-size: 14px; text-align: center}
+
+.pzframe {text-align: left; margin: 1em 0em 1em 1em}
+
+.form_riga {margin-top: 1em}
+.form_sn {width: 100%; display: block}
+.form_dx {width: 100%; display: block}
+.textarea_dx {width: 100%; display: block}
+

@@ -1,0 +1,53 @@
+body {font-family: sans-serif; background-color: #C1C1C1; font-size: 16px}
+
+textarea {resize: none; width: 60em}
+
+.titolo {font-size: 24px; color: #151597; margin: 1em 0em 1em 0em; text-align: center}
+
+.titoletto {font-family: serif; font-style: italic; font-size: 20px; color: #151597; text-align: center}
+
+.login {margin-right: 40%; font-size: 18px; margin-top: 6em; border 1px solid black}
+
+h3 {text-align: center}
+
+p {text-align: justify; margin: 0cm 0cm 0.5cm 0cm}
+
+li {margin-bottom: 1.5em}
+
+a:link {color: #0000FF}
+a:visited {color: #2323FF}
+a:hover {background: yellow}
+
+.barra_utente {text-align: center; margin: 2em 0em 1em 0em}
+.menubar {text-align: center; margin: 0em 0em 3em 0em; line-height: 2em}
+.link_menu {margin-right: 3em}
+
+.contenuto {text-align: center; background-color: white; margin: 1em 1em 1em 1em; padding: 1em 1em 1em 1em}
+
+.visita {background-color: white; clear: left}
+.vecchievisite {background-color: #EEDFF7; margin: 0em 0em 1em 0em; clear: left}
+.pzframe {text-align: center; margin: 2em 20% 4em 20%}
+.pz {text-align: left; margin-bottom: 1em}
+.comando {text-align: center; font-size: large; background-color: #FFF0E2; margin: 2em 2em 2em 2em}
+.errore {text-align: center; font-size: large; background-color: red; margin: 10em 0em 0em 0em}
+.corretto {text-align: center; font-size: large; background-color: green; margin: 10em 0em 0em 0em}
+
+.data {margin-bottom: 1em; color: red}
+.medico {margin-bottom: 1em; color: blue}
+.luogo {margin-bottom: 1em; color: #007CBC}
+.terapia {margin-bottom: 1em; color: #313941}
+.diario {margin-bottom: 1em; color: #513489}
+.eon {margin-bottom: 1em; color: #CD1D45}
+
+.scala {background-color: white; text-align: center; font-size: 12px}
+.siscala {background-color: #FF6600}
+
+.classiupdrs {color: red; margin: 1em 0em 1em 1em}
+
+.barranamnesi {background-color: white; text-align: center; margin: 2em 0em 2em 0em}
+
+.conteggio {text-align: center; font-size: 16px; color: green; margin: 2em 0em 2em 0em}
+
+.form_sn {width: 20%; display: inline-block; vertical-align: top}
+.form_dx {width: 50%}
+.textarea_dx {width: 80%}

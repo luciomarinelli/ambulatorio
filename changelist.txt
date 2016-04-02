@@ -1,0 +1,29 @@
+Changelist
+
+NEW VERSION--
+- Deceased patients in a separate page
+- Added age calculation also for "old" patients
+...
+
+20150207
+- Thorough CSS optimization for mobile visualization and CSS cleanup
+- Improved HTML5 conformance
+- Strenghtened security against MySQL injection attacks in the login page
+
+20141115
+- Removed default message from backup emails
+- Layout optimized for mobile use
+- General CSS cleanup favouring em units
+- ANAGRAFICA_OLD now include patients who did not get in touch for the last 2 years; the page is separated from the original anagrafica
+- Each patient visit has a white background if it'a a telephone/email visit, otherwise the background is yellow
+- Added field "decesso" in table "anagrafica" to indicate deceased patients [TINY INT=1] correponding to a checkbox in mod_pz.php. Dead patients are moved to anagrafica_old list and a cross symbol is added next to the name - REMEMBER TO UPDATE THE ANAGRAFICA TABLE STRUCTURE!
+
+20131221
+- Fixed error inserting single quotes into MySQL database consequent to "magic quotes" suppression following upgrade to PHP 5.4. Added mysql_real_escape_string() filter to all fields before entering the query
+- Changed field name "Codice esenzione" instead of "Numero libretto ASL" now almost useless (remember to purge existing content on the DB)
+- Added HTML5 validation to all forms
+
+20131013
+- Report of last 20 logged operations added to statistics page
+- Table layout corrected in statistics page
+
