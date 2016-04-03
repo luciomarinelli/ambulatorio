@@ -16,8 +16,9 @@ require ("funzioni.inc.php");
 <head>
 <title><?=$conf_head_title ?></title>
 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="author" content="Lucio Marinelli" />
-<meta name="generator" content="Gedit" />
+<meta name="generator" content="Bluefish 2.2.6" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" type="text/css" media="all" href="ambulatorio_all.css">

@@ -3,6 +3,7 @@ Changelist
 NEW VERSION--
 - Deceased patients in a separate page
 - Added age calculation also for "old" patients
+- Added UTF-8 text coding
 ...
 
 20150207
