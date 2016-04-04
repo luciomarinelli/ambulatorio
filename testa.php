@@ -11,7 +11,7 @@ or die("Impossibile selezionare il database $dbname!");
 
 require ("funzioni.inc.php");
 ?>
-
+<!DOCTYPE HTML>
 <html>
 <head>
 <title><?=$conf_head_title ?></title>
