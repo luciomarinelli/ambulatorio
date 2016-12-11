@@ -3,7 +3,7 @@ Changelist
 NEW VERSION--
 - Deceased patients in a separate page
 - Added age calculation also for "old" patients
-- Added UTF-8 text coding in HTML output and MySQL tables collation
+- Changed UTF-8 text coding in MySQL tables collation
 ...
 
 20150207
