@@ -8,6 +8,6 @@ textarea {width: 100%}
 
 .form_riga {margin-top: 1em}
 .form_sn {width: 100%; display: block}
-.form_dx {width: 100%; display: block}
-.textarea_dx {width: 100%; display: block}
+.form_dx {width: 95%; display: block}
+.textarea_dx {width: 95%; display: block}
 

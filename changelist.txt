@@ -1,10 +1,11 @@
 Changelist
 
-NEW VERSION--
+20161219
 - Deceased patients in a separate page
 - Added age calculation also for "old" patients
-- Changed UTF-8 text coding in MySQL tables collation
-...
+- Changed collation in MySQL tables to UTF-8
+- Improved CSS
+- Improved JavaScript in visit list in order to link the visit label with the visit box
 
 20150207
 - Thorough CSS optimization for mobile visualization and CSS cleanup

@@ -54,5 +54,7 @@ To install, import the Database_structure.sql into your MySQL database, configur
 
 * Encrypt sensitive informations
 
+* Ask for confirmation before closing unsaved windows
+
 * ... suggest other implementations!
 
