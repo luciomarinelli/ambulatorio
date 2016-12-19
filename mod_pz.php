@@ -106,6 +106,9 @@ $result_visite = mysql_query ($query_visite) or die (mysql_error());
         //e la scala sfrutta l'id_visita della visita, le scale possono essere
         //compilate solo per le visite già inserite
         $idvisita=$rigav['id_visita'];
+
+		$idlabel="label".$idvisita; //crea un id per ogni etichetta di ciascuna visita in modo da lavorarci con JS
+
         //Sfruttando la lista delle scale, per ciascuna viene verificata la presenza
         //di una scala compilata per quell'id, altrimenti si crea nuova
 
@@ -116,11 +119,11 @@ $result_visite = mysql_query ($query_visite) or die (mysql_error());
 	if (eregi('tele',$luogo)) $colore_etichetta="white";
 	else $colore_etichetta="yellow";
 
-	echo "<div onclick=\"if(document.getElementById('$idvisita').style.display=='none') {document.getElementById('$idvisita').style.display='block';} else {document.getElementById('$idvisita').style.display='none';}\" style=\"color: black; cursor: pointer; background-color: $colore_etichetta; margin: 1em 1em 1em 1em; float: left\">$etichettadata</div>";
+	echo "<div id=\"$idlabel\" onclick=\"if(document.getElementById('$idvisita').style.display=='none') {document.getElementById('$idvisita').style.display='block'; document.getElementById('$idlabel').style.paddingBottom='1em'; document.getElementById('$idlabel').style.marginBottom='0em';} else {document.getElementById('$idvisita').style.display='none'; document.getElementById('$idlabel').style.paddingBottom='0em'; document.getElementById('$idlabel').style.marginBottom='1em';}\" style=\"color: black; cursor: pointer; background-color: $colore_etichetta; margin: 1em 1em 1em 1em; float: left\">$etichettadata</div>";
 
 	echo "<div class=\"vecchievisite\" id=\"$idvisita\" style=\"display: none\">";
 
-	echo "<div class=\"scala\">";
+	echo "<div style=\"background-color: $colore_etichetta\" class=\"scala\">";
         while ($listascale=mysql_fetch_assoc($result_qlistascale)) {
             $scalalink=$listascale['link'];
 
