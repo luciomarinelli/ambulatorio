@@ -1,14 +1,8 @@
 <?php
 
-include ("config.inc.php");
-
-$conn = mysql_connect($dbhost,$dbuser,$dbpass)
-or die("Impossibile collegarsi al server MySQL!");
-
-mysql_select_db($dbname,$conn)
-or die("Impossibile selezionare il database $dbname!");
-
-include ("funzioni.inc.php");
+require ("config.inc.php");
+require ("dbconnect.inc.php");
+require ("funzioni.inc.php");
 
 unset($_POST); //altrimenti non funziona il POST all'interno del popup...
 

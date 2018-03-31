@@ -2,15 +2,9 @@
 
 $idvisita=$_GET['idvisita'];
 
-include ("config.inc.php");
-
-$conn = mysql_connect($dbhost,$dbuser,$dbpass)
-or die("Impossibile collegarsi al server MySQL!");
-
-mysql_select_db($dbname,$conn)
-or die("Impossibile selezionare il database $dbname!");
-
-include ("funzioni.inc.php");
+require ("config.inc.php");
+require ("dbconnect.inc.php");
+require ("funzioni.inc.php");
 
 $ts=$_GET[ts];
 $medico=medico($ts);
@@ -26,6 +20,7 @@ $visita=mysql_fetch_assoc($result_qvisita);
 <html>
 <head>
 <title>Edita Visita</title>
+<meta charset="UTF-8" />
 <meta name="author" content="Lucio Marinelli" />
 <meta name="generator" content="Gedit" />
 <meta name="viewport" content="width=device-width, initial-scale=1">

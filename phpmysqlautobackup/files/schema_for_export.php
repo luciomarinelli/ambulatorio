@@ -13,14 +13,22 @@ Version    Date              Comment
 1.5.2      April 2009 improved "create table" export and added backup time start & end
 1.5.3      Nov 2009   replaced PHP function "ereg_replace" with "str_replace" - all occurances
 1.5.4      Nov 2009   replaced PHP function "str_replace" with "substr" line 114
+1.5.5      Feb 2011  more options for config added - email reports only and/or backup, save backup file to local and/or remote server.
+                                Reporter added: email report of last 6 (or more) backup stats (date, total bytes exported, total lines exported) plus any errors
+                                MySQL error reporting added  and Automated version checker added
+1.6.0      Dec 2011  PDO version
+1.6.1      April 2012 - CURLOPT_TRANSFERTEXT turned off (to stop garbaging zip file on transfer) and bug removed from write_back
+1.6.2      Setp 2012 - corrected issue with CONSTRAINT and FOREIGN KEYS, related to InnoDB functionality/restores
+1.6.3      Oct 2012 - corrected bug with CONSTRAINT and added CHARSET - bug fix code gratefully received from: vit.bares@gmail.com
 ********************************************************************************************/
-$phpMySQLAutoBackup_version="1.5.4";
+$phpMySQLAutoBackup_version="1.6.3";
 // ---------------------------------------------------------
-$link = mysql_connect($db_server,$mysql_username,$mysql_password);
-if ($link) mysql_select_db($db);
-if (mysql_error()) exit(mysql_error($link));
+$dbc = dbc::instance();
+
 //add new phpmysqlautobackup table if not there...
-if(mysql_num_rows(mysql_query("SHOW TABLES LIKE 'phpmysqlautobackup' "))==0)
+$result = $dbc->prepare("SHOW TABLES LIKE 'phpmysqlautobackup' ");
+$rows = $dbc->executeGetRows($result);
+if(count($rows)<1)
 {
    $query = "
     CREATE TABLE phpmysqlautobackup (
@@ -28,93 +36,145 @@ if(mysql_num_rows(mysql_query("SHOW TABLES LIKE 'phpmysqlautobackup' "))==0)
     version varchar(6) default NULL,
     time_last_run int(11) NOT NULL,
     PRIMARY KEY (id)
-    ) TYPE=MyISAM;";
-   $result=mysql_query($query);
+    )";
+   $result = $dbc->prepare($query);
+   $result = $dbc->execute($result);
    $query="INSERT INTO phpmysqlautobackup (id, version, time_last_run)
              VALUES ('1', '$phpMySQLAutoBackup_version', '0');";
-   $result=mysql_query($query);
+   $result = $dbc->prepare($query);
+   $result = $dbc->execute($result);
 }
 //check time last run - to prevent malicious over-load attempts
 $query="SELECT * from phpmysqlautobackup WHERE id=1 LIMIT 1 ;";
-$result=mysql_query($query);
-$row=mysql_fetch_array($result);
-if (time() < ($row['time_last_run']+$time_internal)) exit();// exit if already run within last time_interval
+$result = $dbc->prepare($query);
+$rows = $dbc->executeGetRows($result);
+if (time() < ($rows[0]['time_last_run']+$time_interval)) exit();// exit if already run within last time_interval
 //update version number if not already done so
-if ($row['version']!=$phpMySQLAutoBackup_version) mysql_query("update phpmysqlautobackup set version='$phpMySQLAutoBackup_version'");
+if ($rows[0]['version']!=$phpMySQLAutoBackup_version)
+{
+ $result = $dbc->prepare("update phpmysqlautobackup set version='$phpMySQLAutoBackup_version'");
+ $result = $dbc->execute($result);
+}
 ////////////////////////////////////////////////////////////////////////////////////
 
 $query="UPDATE phpmysqlautobackup SET time_last_run = '".time()."' WHERE id=1 LIMIT 1 ;";
-$result=mysql_query($query);
+$result = $dbc->prepare($query);
+$result = $dbc->execute($result);
 
 if (!isset($table_select))
 {
-  $t_query = mysql_query('show tables');
+  $result = $dbc->prepare("show tables");
   $i=0;
   $table="";
-  while ($tables = mysql_fetch_array($t_query, MYSQL_ASSOC) )
-        {
-         list(,$table) = each($tables);
-         $exclude_this_table = isset($table_exclude)? in_array($table, $table_exclude) : false;
-         if(!$exclude_this_table) $table_select[$i]=$table;
-         $i++;
-        }
+  $tables = $dbc->executeGetRows($result);
+  foreach ($tables as $table_array)
+  {
+   list(,$table) = each($table_array);
+   $exclude_this_table = isset($table_exclude)? in_array($table, $table_exclude) : false;
+   if(!$exclude_this_table) $table_select[$i]=$table;
+   $i++;
+   //echo "$table<br>";
+  }
 }
+
+$recordBackup = new record();
 
 $thedomain = $_SERVER['HTTP_HOST'];
 if (substr($thedomain,0,4)=="www.") $thedomain=substr($thedomain,4,strlen($thedomain));
 
-$buffer = '# MySQL backup created by phpMySQLAutoBackup - Version: '.$phpMySQLAutoBackup_version . "\n" .
-          '# ' . "\n" .
-          '# http://www.dwalker.co.uk/phpmysqlautobackup/' . "\n" .
-          '#' . "\n" .
-          '# Database: '. $db . "\n" .
-          '# Domain name: ' . $thedomain . "\n" .
-          '# (c)' . date('Y') . ' ' . $thedomain . "\n" .
-          '#' . "\n" .
-          '# Backup START time: ' . strftime("%H:%M:%S",time()) . "\n".
-          '# Backup END time: #phpmysqlautobackup-endtime#' . "\n".
-          '# Backup Date: ' . strftime("%d %b %Y",time()) . "\n";$i=0;
+$buffer = '# MySQL backup created by phpMySQLAutoBackup - Version: '.$phpMySQLAutoBackup_version . NEWLINE .
+          '# ' . NEWLINE .
+          '# http://www.dwalker.co.uk/phpmysqlautobackup/' . NEWLINE .
+          '#' . NEWLINE .
+          '# Database: '. $db . NEWLINE .
+          '# Domain name: ' . $thedomain . NEWLINE .
+          '# (c)' . date('Y') . ' ' . $thedomain . NEWLINE .
+          '#' . NEWLINE .
+          '# Backup START time: ' . strftime("%H:%M:%S",time()) . NEWLINE.
+          '# Backup END time: #phpmysqlautobackup-endtime#' . NEWLINE.
+          '# Backup Date: ' . strftime("%d %b %Y",time()) . NEWLINE;
+
+$i=0;
+$lines_exported=0;
+$alter_tables="";
 foreach ($table_select as $table)
         {
           $i++;
-          $export = "\n" .'drop table if exists `' . $table . '`;' . "\n";
+          $export = ' '.NEWLINE.'drop table if exists `' . $table . '`; ' . NEWLINE;
 
           //export the structure
           $query='SHOW CREATE TABLE `' . $table . '`';
-          $rows_query = mysql_query($query);
-          $tables = mysql_fetch_array($rows_query);
-          $export.= $tables[1] ."; \n";
+          $result = $dbc->prepare($query);
+          $tables = $dbc->executeGetRows($result);
+          $this_table=$tables[0]['Create Table'];
+          //$export.= print_r($tables) ."; \n";
+          $alter_table="";          
+          if (preg_match('@^[\s]*CONSTRAINT|FOREIGN[\s]+KEY@',$this_table))
+          {
+           // change line end char to NEWLINE
+           if (strpos($this_table, "(\r\n ")) $this_table = str_replace("\r\n", NEWLINE, $this_table);
+           elseif (strpos($this_table, "(\n ")) $this_table = str_replace("\n", NEWLINE, $this_table);
+           elseif (strpos($this_table, "(\r ")) $this_table = str_replace("\r", NEWLINE, $this_table);
 
-          $table_list = array();
-          $fields_query = mysql_query('show fields from  `' . $table . '`');
-          while ($fields = mysql_fetch_array($fields_query))
+           $sql_lines = explode(NEWLINE, $this_table);
+           $sql_count = count($sql_lines);
+           // find constraints
+           for ($j = 0; $j < $sql_count; $j++)
            {
-            $table_list[] = $fields['Field'];
+            if (preg_match('@^[\s]*(CONSTRAINT|FOREIGN[\s]+KEY)@', $sql_lines[$j]) === 1)
+               {
+               //the following was gratefully received from: vit.bares@gmail.com
+               // if more than one constraint in table, we would have ADD CONSTRAINT command ending with ","
+               // which is SQL syntax error
+               $sql_lines[$j] = str_replace(',', '', $sql_lines[$j]);              
+               $alter_table.= 'ALTER TABLE `' . $table . '` ADD ' . $sql_lines[$j] . ';' . NEWLINE;
+               
+               // if more than one constraint in table, replace rule with comma does not work for at least one constraint
+               $needles = array(
+                   "," . NEWLINE . $sql_lines[$j],
+                   NEWLINE . $sql_lines[$j]
+               );
+               //the above was gratefully received from: vit.bares@gmail.com
+               $this_table = str_replace($needles, "", $this_table);                        
+            }
            }
+           $alter_tables.=NEWLINE.$alter_table;
+          }
+          $export.= $this_table.';'.NEWLINE;
+          
+          $table_list = array();
+          $result = $dbc->prepare('show fields from  `' . $table . '`');
+          $fields = $dbc->executeGetRows($result);
+          foreach ($fields as $field_array) $table_list[] = $field_array['Field'];           
 
           $buffer.=$export;
           // dump the data
           $query='select * from `' . $table . '` LIMIT '. $limit_from .', '. $limit_to.' ';
-          $rows_query = mysql_query($query);
-          while ($rows = mysql_fetch_array($rows_query)) {
+          $result = $dbc->prepare($query);
+          $rows = $dbc->executeGetRows($result);
+          foreach ($rows as $row_array)
+          {
             $export = 'insert into `' . $table . '` (`' . implode('`, `', $table_list) . '`) values (';
+            $lines_exported++;
             reset($table_list);
-            while (list(,$i) = each($table_list)) {
-              if (!isset($rows[$i])) {
-                $export .= 'NULL, ';
-              } elseif (has_data($rows[$i])) {
-                $row = addslashes($rows[$i]);
+            while (list(,$i) = each($table_list))
+            {
+              if (!isset($row_array[$i])) $export .= 'NULL, ';
+              elseif (has_data($row_array[$i]))
+              {
+                $row = addslashes($row_array[$i]);
                 $row = str_replace("\n#", "\n".'\#', $row);
-
                 $export .= '\'' . $row . '\', ';
-              } else {
-                $export .= '\'\', ';
               }
+              else $export .= '\'\', ';
             }
-            $export = substr($export,0,-2) . "); \n";
+            $export = substr($export,0,-2) . ");".NEWLINE;
             $buffer.= $export;
           }
         }
-mysql_close();
+//uncomment line below to show table dumps, inc insert and alter table statements:
+//exit('<textarea rows="30" name="themessage" cols="100">'.$buffer.$alter_tables.'</textarea>');
+
+$buffer.=$alter_tables;        
+$recordBackup->save(time(), strlen($buffer), $lines_exported);
 $buffer = str_replace('#phpmysqlautobackup-endtime#', strftime("%H:%M:%S",time()), $buffer);
-?>
