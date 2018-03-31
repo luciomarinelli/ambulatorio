@@ -1,131 +1,86 @@
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
--- 
--- Struttura della tabella `anagrafica`
--- 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 
 CREATE TABLE `anagrafica` (
-  `idpz` int(11) NOT NULL AUTO_INCREMENT,
-  `cognome` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `nome` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `idpz` int(11) NOT NULL,
+  `cognome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `nome` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `nascita_data` date DEFAULT NULL,
-  `nascita_luogo` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `sesso` char(1) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cf` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `asl` varchar(7) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `telefoni` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `domicilio` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `professione` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `statocivile` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `nascita_luogo` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `sesso` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `cf` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `asl` varchar(7) COLLATE utf8_unicode_ci NOT NULL,
+  `telefoni` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `domicilio` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `professione` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `statocivile` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   `prima_visita` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `diagnosi` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `note` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `diagnosi` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `note` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `ultima_visita` date NOT NULL DEFAULT '2000-01-01',
-  `decesso` tinyint(4) NOT NULL DEFAULT '0',
-  UNIQUE KEY `idpz` (`idpz`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `anamnesipd`
--- 
+  `decesso` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `anamnesipd` (
   `idpz` int(11) NOT NULL DEFAULT '0',
-  `familia` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `familia` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `esordio_eta` tinyint(4) NOT NULL DEFAULT '0',
-  `esordio_sede` varchar(4) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `esordio_sede_txt` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `esordio_tipo` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `esordio_sede` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
+  `esordio_sede_txt` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `esordio_tipo` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `interapia_data` date DEFAULT NULL,
-  `interapia_tipo` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `comorbilita` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `interapia_tipo` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `comorbilita` longtext COLLATE utf8_unicode_ci NOT NULL,
   `compli_onoff` tinyint(4) NOT NULL DEFAULT '0',
   `compli_delon` tinyint(4) NOT NULL DEFAULT '0',
   `compli_woff` tinyint(4) NOT NULL DEFAULT '0',
   `compli_dysk` tinyint(4) NOT NULL DEFAULT '0',
-  `compli_altro` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `compli_allu` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `compli_sonno` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `compli_cogni` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `compli_vegeta` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `esami` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cadute` int(11) NOT NULL,
-  UNIQUE KEY `idpz` (`idpz`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `hy`
--- 
+  `compli_altro` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `compli_allu` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `compli_sonno` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `compli_cogni` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `compli_vegeta` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `esami` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `cadute` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `hy` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
-  `stage` decimal(2,1) NOT NULL DEFAULT '0.0',
-  UNIQUE KEY `id_visita` (`id_visita`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `listanamnesi`
--- 
+  `stage` decimal(2,1) NOT NULL DEFAULT '0.0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `listanamnesi` (
   `id` tinyint(4) NOT NULL DEFAULT '0',
-  `link` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `descrizione` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `listascale`
--- 
+  `link` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `descrizione` varchar(40) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `listascale` (
   `id` tinyint(4) NOT NULL DEFAULT '0',
-  `link` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `descrizione` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `log`
--- 
+  `link` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `descrizione` varchar(40) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `log` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `timestamp` int(11) NOT NULL DEFAULT '0',
-  `medico` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `azione` varchar(40) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `paziente` varchar(16) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `medici`
--- 
+  `medico` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `azione` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `paziente` varchar(16) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `medici` (
-  `cognome` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `cod_ts` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `cognome` (`cognome`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `mmse`
--- 
+  `cognome` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `cod_ts` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `mmse` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
@@ -148,28 +103,14 @@ CREATE TABLE `mmse` (
   `compito` tinyint(4) NOT NULL DEFAULT '0',
   `occhichiusi` tinyint(4) NOT NULL DEFAULT '0',
   `frase` tinyint(4) NOT NULL DEFAULT '0',
-  `disegno` tinyint(4) NOT NULL DEFAULT '0',
-  UNIQUE KEY `id_visita` (`id_visita`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `phpmysqlautobackup`
--- 
+  `disegno` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `phpmysqlautobackup` (
   `id` int(11) NOT NULL,
-  `version` varchar(6) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `time_last_run` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `updrs`
--- 
+  `version` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `time_last_run` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `updrs` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
@@ -228,25 +169,62 @@ CREATE TABLE `updrs` (
   `q39` tinyint(4) NOT NULL DEFAULT '0',
   `q40` tinyint(4) NOT NULL DEFAULT '0',
   `q41` tinyint(4) NOT NULL DEFAULT '0',
-  `q42` tinyint(4) NOT NULL DEFAULT '0',
-  UNIQUE KEY `id_visita` (`id_visita`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
--- 
--- Struttura della tabella `visite`
--- 
+  `q42` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE `visite` (
-  `id_visita` int(11) NOT NULL AUTO_INCREMENT,
+  `id_visita` int(11) NOT NULL,
   `idpz` int(11) NOT NULL,
   `data` int(20) DEFAULT NULL,
-  `luogo` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `terapia_atto` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `diario` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `eon` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `terapia_data` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `medico` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_visita`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 PACK_KEYS=0;
+  `luogo` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `terapia_atto` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `diario` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `eon` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `terapia_data` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `medico` varchar(20) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
+
+
+ALTER TABLE `anagrafica`
+  ADD UNIQUE KEY `idpz` (`idpz`);
+
+ALTER TABLE `anamnesipd`
+  ADD UNIQUE KEY `idpz` (`idpz`);
+
+ALTER TABLE `hy`
+  ADD UNIQUE KEY `id_visita` (`id_visita`);
+
+ALTER TABLE `listanamnesi`
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `listascale`
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `log`
+  ADD UNIQUE KEY `id` (`id`);
+
+ALTER TABLE `medici`
+  ADD UNIQUE KEY `cognome` (`cognome`);
+
+ALTER TABLE `mmse`
+  ADD UNIQUE KEY `id_visita` (`id_visita`);
+
+ALTER TABLE `phpmysqlautobackup`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `updrs`
+  ADD UNIQUE KEY `id_visita` (`id_visita`);
+
+ALTER TABLE `visite`
+  ADD PRIMARY KEY (`id_visita`);
+
+
+ALTER TABLE `anagrafica`
+  MODIFY `idpz` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `visite`
+  MODIFY `id_visita` int(11) NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

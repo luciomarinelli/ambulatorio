@@ -1,5 +1,12 @@
 Changelist
 
+20180331
+- Updated phpMySQLAutoBackup to version 1.6.3 (refer to http://dwalker.co.uk/phpmysqlautobackup/ )
+- added mysql_set_charset('utf8'); before all queries to allow correct write of extended characters to the database
+- added mysql_query ("SET NAMES 'UTF8'") right after connecting to the database in order to force PHP to send characters as UTF8 instead of latin1 (based on instructions: https://github.com/phpmyadmin/phpmyadmin/wiki/Garbled_data)
+- updated database structure: all tables are InnoDB & utf8_unicode_ci (manually update your existing database!)
+- database connect commands moved to required dbconnect.inc.php
+
 20161219
 - Deceased patients in a separate page
 - Added age calculation also for "old" patients

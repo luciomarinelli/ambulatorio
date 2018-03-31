@@ -1,16 +1,10 @@
 <?php
-
 require ("config.inc.php");
 include ("versione.inc.php");
-
-$conn = mysql_connect($dbhost,$dbuser,$dbpass)
-or die("Impossibile collegarsi al server MySQL!");
-
-mysql_select_db($dbname,$conn)
-or die("Impossibile selezionare il database $dbname!");
-
+require ("dbconnect.inc.php");
 require ("funzioni.inc.php");
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
