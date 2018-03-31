@@ -1,4 +1,4 @@
-Ambulatorio - release 20161219 - December 19, 2016
+Ambulatorio - release 20180331 - March 31, 2018
 
 "Ambulatorio" is a server-based outpatients managing software written in PHP and MySQL. The user interface, made of HTML, CSS and small chunks of Javascript, is basic and in Italian only. Probably the main peculiarity is that I am a medical doctor and I programmed it to meet my professional requirements, without asking an expert programmer to translate what I need for my clinical practice.
 
