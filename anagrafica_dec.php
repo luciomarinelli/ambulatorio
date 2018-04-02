@@ -1,4 +1,3 @@
-
 <?php
 
 require("testa.php");
@@ -15,6 +14,7 @@ $conta=0; //azzera contatore pazienti attuali
 
 while ($riga = mysql_fetch_assoc($result)) {
 	scrivi_riga_pz($riga,$ts,0); //mostra i pazienti deceduti
+	echo "\n";
 	$conta++;
 	}
 

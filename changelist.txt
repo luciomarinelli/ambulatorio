@@ -1,5 +1,9 @@
 Changelist
 
+*NEW RELEASE*
+- lesser code cleanup
+- corrected bug in SQL query generating notice about last time inserted/changed anamnesipd
+
 20180331
 - Updated phpMySQLAutoBackup to version 1.6.3 (refer to http://dwalker.co.uk/phpmysqlautobackup/ )
 - added mysql_set_charset('utf8'); before all queries to allow correct write of extended characters to the database

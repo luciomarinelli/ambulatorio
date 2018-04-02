@@ -21,7 +21,7 @@ if($medico!=NULL) {
 
 <div class="menubar">
 <span class="link_menu"><a href="anagrafica.php?ts=<?=$ts ?>">Anagrafica</a></span>
-<span class="link_menu"><a href="mod_pz.php?idpz=nuovo&ts=<?=$ts ?>">Nuovo</a></span>
+<span class="link_menu"><a href="mod_pz.php?idpz=nuovo&amp;ts=<?=$ts ?>">Nuovo</a></span>
 <span class="link_menu"><a href="ricerca.php?ts=<?=$ts ?>">Ricerca</a></span>
 <span class="link_menu"><a href="stat.php?ts=<?=$ts ?>">Statistiche</a></span>
 <span class="link_menu"><a href="logout.php?ts=<?=$ts ?>">Logout</a></span>
@@ -33,5 +33,4 @@ if($medico!=NULL) {
 else die ('Accesso non autorizzato');
 
 ?>
-</div>
 

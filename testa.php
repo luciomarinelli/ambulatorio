@@ -14,11 +14,12 @@ require ("funzioni.inc.php");
 <meta name="author" content="Lucio Marinelli" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" type="text/css" media="all" href="ambulatorio_all.css">
-<link rel="stylesheet" type="text/css" media="handheld, only screen and (max-width: 640px)" href="ambulatorio_mobile.css">
+<link rel="stylesheet" type="text/css" media="all" href="ambulatorio_all.css" />
+<link rel="stylesheet" type="text/css" media="handheld, only screen and (max-width: 640px)" href="ambulatorio_mobile.css" />
 
 <script language="JavaScript">
-<!-- Begin
+
+<!-- Begin **ALLOWS WINDOWS POPUP**
 function popUp(URL) {
 day = new Date();
 id = day.getTime();
@@ -27,11 +28,9 @@ w = h*1.3;
 eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,location=0,statusbar=0,menubar=0,resizable=1,width='+w+',height='+h+'');");
 }
 // End -->
-</script>
 
-<script language="JavaScript">
 
-<!-- Begin
+<!-- Begin **PUT FOCUS IN THE FIRST FORM FIELD**
  function putFocus(formInst, elementInst) {
   if (document.forms.length > 0) {
    document.forms[formInst].elements[elementInst].focus();
@@ -40,6 +39,7 @@ eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=1,lo
 // The second number in the "onLoad" command in the body
 // tag determines the form's focus. Counting starts with '0'
 //  End -->
+
 </script>
 
 </head>

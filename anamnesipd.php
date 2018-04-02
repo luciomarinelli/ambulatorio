@@ -4,8 +4,6 @@ require ("config.inc.php");
 require ("dbconnect.inc.php");
 require ("funzioni.inc.php");
 
-unset($_POST); //TEST
-
 $idpz=$_GET['idpz'];
 $medico=$_GET['medico']; //serve solo per registrarlo nel log
 
@@ -31,7 +29,7 @@ if ($log_ins=mysql_fetch_assoc($r_qlog_ins)) {
 	$frase_inserimento="Creata in data $data_inserimento da $medico_inserimento";
 	}
 
-$qlog_upd="SELECT * FROM log WHERE paziente='$idpz' AND azione='anamnesipd aggiornata' AND id=(SELECT MAX(id) FROM log WHERE paziente='$idpz' GROUP BY paziente)"; // verifica che il record selezionato con MAX sia effettivamente l'ultimo in LOG una volta che ci saranno diverse operazioni!!
+$qlog_upd="SELECT * FROM log WHERE paziente='$idpz' AND azione='anamnesipd aggiornata' ORDER BY id DESC LIMIT 1";
 $r_qlog_upd=mysql_query($qlog_upd);
 if ($log_upd=mysql_fetch_assoc($r_qlog_upd)) {
 	$data_aggiornamento=date('j/n/Y',$log_upd['timestamp']);

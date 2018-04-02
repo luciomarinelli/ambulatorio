@@ -1,4 +1,3 @@
-
 <?php
 
 require("testa.php");
@@ -16,6 +15,7 @@ $conta=0; //azzera contatore pazienti attuali
 while ($riga = mysql_fetch_assoc($result)) {
 	if (($riga['fresco']>730)) {
 		scrivi_riga_pz($riga,$ts,0); //mostra i pazienti visti da più di due anni
+		echo "\n";
 		$conta++;
 		}
 	}

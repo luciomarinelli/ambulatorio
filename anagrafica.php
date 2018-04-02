@@ -1,4 +1,3 @@
-
 <?php
 
 require("testa.php");
@@ -16,6 +15,7 @@ $conta=0; //azzera contatore pazienti attuali
 while ($riga = mysql_fetch_assoc($result)) {
 	if ($riga['fresco'] <=730) {
 		scrivi_riga_pz($riga,$ts,1); //mostra prima solo i pazienti visti da meno di due anni
+		echo "\n";
 		$conta++;
 		}
 	}
@@ -25,7 +25,7 @@ echo "<div class=\"conteggio\">$conta pazienti visti negli ultimi 2 anni</div>";
 echo "</div>";
 
 echo "<div style=\"text-align: center\"> <a href=\"anagrafica_old.php?ts=$ts\">Pazienti visti da pi&ugrave; di due anni</a></div>";
-echo "<div style=\"text-align: center; margin-top: 2em\"> <a href=\"anagrafica_dec.php?ts=$ts\">Pazienti deceduti&nbsp;&#8224;</a></div>";
+echo "<div style=\"text-align: center; margin: 2em 0em 2em 0em\"> <a href=\"anagrafica_dec.php?ts=$ts\">Pazienti deceduti&nbsp;&#8224;</a></div>";
 
 ?>
 

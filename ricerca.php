@@ -91,9 +91,9 @@ if ($rconta>0) {
 	$result = mysql_query ($query) or die (mysql_error());
 	echo "<table>";
 	$pz_trovati=mysql_num_rows($result);
-	echo "<div style=\"text-align: center; color: red; margin-bottom: 1em\">Con questi criteri di ricerca i pazienti trovati sono: ".$pz_trovati."</div>";
+	echo "<tr><th>Con questi criteri di ricerca i pazienti trovati sono: ".$pz_trovati."</th></tr>";
 	while ($riga = mysql_fetch_assoc($result)) {
-		echo "<tr><td><a href=\"mod_pz.php?idpz=".$riga['idpz']."&amp;ts=$ts\">".$riga['cognome']." ".$riga['nome']."</a></td></tr>";
+		echo "<tr><td><a href=\"mod_pz.php?idpz=".$riga['idpz']."&amp;ts=$ts\">".$riga['cognome']." ".$riga['nome']."</a></td></tr>\n";
 		}
 	echo "</table>";
 	}

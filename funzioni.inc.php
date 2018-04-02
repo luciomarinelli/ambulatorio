@@ -79,7 +79,7 @@ function scrivi_riga_pz ($riga,$ts,$freschi) {
 	echo " href=\"";
 	echo "mod_pz.php?idpz=";
 	echo $riga['idpz'];
-	echo "&ts=$ts\"><strong>";
+	echo "&amp;ts=$ts\"><strong>";
 	echo $riga['cognome'];
 	echo " ";
 	echo $riga['nome'];
