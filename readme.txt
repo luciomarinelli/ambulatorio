@@ -37,10 +37,12 @@ Main Features
 
 To contact the author please visit the website http://www.luciomarinelli.com
 
-To install, import the Database_structure.sql into your MySQL database, configure the config.inc.php file and upload all the files into a folder on your Apache/PHP configured server preserving the subfolders structure.
+To install, import the Database_structure.sql into your MySQL database, configure the config.inc.php file and upload all the files into a folder on your Apache/PHP configured server preserving the subfolders structure. Manually add at least one "cognome" and "password" credential record in "medici" table in order to log in.
 
 
 **Future directions**
+
+* Convert mysql calls to msqli since MySQL extension is removed from PHP version 7.1 (use https://github.com/philip/MySQLConverterTool ?) *
 
 * Improving graphic and usability
 
