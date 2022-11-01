@@ -6,11 +6,11 @@ require("controllo.inc.php");
 
 
 //conta numero di records
-$qconteggio=mysql_query ("SELECT * FROM anagrafica");
-$conteggio=mysql_num_rows ($qconteggio);
+if (!$qconteggio = $mysqli->query("SELECT * FROM anagrafica")) echo "Query error";
+$conteggio=mysqli_num_rows ($qconteggio);
 
-$qnumvisite=mysql_query ("SELECT * FROM visite");
-$numvisite=mysql_num_rows ($qnumvisite);
+if (!$qnumvisite = $mysqli->query("SELECT * FROM visite")) echo "Query error";
+$numvisite=mysqli_num_rows ($qnumvisite);
 
 echo "<div class=\"conteggio\">$conteggio pazienti presenti nel database, $numvisite visite inserite</div>";
 
@@ -18,14 +18,14 @@ echo "<div class=\"conteggio\">$conteggio pazienti presenti nel database, $numvi
 //conta numero di visite divise per LUOGO nei mesi dell'anno in corso e del precedente (tabella con mesi nelle righe e luoghi nelle colonne)
 
 //anno della prima visita presente nel database
-$q_min_anno=mysql_query ("SELECT FROM_UNIXTIME(data,'%Y') FROM visite WHERE data=(SELECT MIN(data) FROM visite)");
-$min_anno=mysql_fetch_row ($q_min_anno);
+if (!$q_min_anno = $mysqli->query("SELECT FROM_UNIXTIME(data,'%Y') FROM visite WHERE data=(SELECT MIN(data) FROM visite)")) echo "Query error";
+$min_anno=mysqli_fetch_row ($q_min_anno);
 $min_anno=$min_anno[0];
 
 //anno attuale
 $anno_attuale=date('Y');
-if ($_POST[report_anno]=="") $report_anno=$anno_attuale;
-else $report_anno=$_POST[report_anno];
+if ($_POST['report_anno']=="") $report_anno=$anno_attuale;
+else $report_anno=$_POST['report_anno'];
 
 //crea drop down menu per scegliere l'anno
 echo "<h2>Riassunto delle visite per anno</h2>";
@@ -96,18 +96,18 @@ echo "</table>";
 
 //riporta gli ultimi 20 record del log
 $q_logread = ("SELECT * FROM log ORDER BY timestamp DESC");
-$r_logread = mysql_query ($q_logread) or die (mysql_error());
+if (!$r_logread= $mysqli->query($q_logread)) echo "Query error";
 
 echo "<h2>Ultime 20 operazioni nel log</h2><table border=\"1px\" align=\"center\">";
 echo "<tr><th>Timestamp</th><th>Utente</th><th>Azione</th><th>Paziente</th></tr>";
 
 for ($contatore=1;$contatore<21;$contatore++) {
-	$rigalog = mysql_fetch_assoc($r_logread);
-	$rigalog['timestamp']=date(r,$rigalog['timestamp']); //Converti timestamp
+	$rigalog = mysqli_fetch_assoc($r_logread);
+	$rigalog['timestamp']=date('r',$rigalog['timestamp']); //Converti timestamp
 	if ($rigalog['paziente']!="") { //converte numero del paziente in cognome e nome
 		$numeropz=$rigalog['paziente'];
-		$r_convertipz = mysql_query ("SELECT cognome,nome FROM anagrafica WHERE idpz='$numeropz'") or die (mysql_error());
-		$nomepz=mysql_fetch_assoc($r_convertipz);
+        if (!$r_convertipz = $mysqli->query("SELECT cognome,nome FROM anagrafica WHERE idpz='$numeropz'")) echo "Query error";
+		$nomepz=mysqli_fetch_assoc($r_convertipz);
 		$nomepz_formattato=$nomepz['cognome']." ".$nomepz['nome'];
 		}
 	else $nomepz_formattato="";

@@ -3,13 +3,13 @@
 //scala MMSE
 
 $qscala="SELECT * FROM mmse WHERE id_visita='$id'";
-$result_qscala = mysql_query ($qscala) or die (mysql_error());
-$scalapresente=mysql_num_rows($result_qscala);
+if (!$result_qscala = $mysqli->query($qscala)) echo "Query error";
+$scalapresente=mysqli_num_rows($result_qscala);
 
 if ($scalapresente==1) {
 	$opera="update";
 
-	$scala=mysql_fetch_assoc($result_qscala);
+	$scala=mysqli_fetch_assoc($result_qscala);
 	extract($scala);
 
 	//calcola totale

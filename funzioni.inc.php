@@ -10,20 +10,22 @@ function scrivi ($testo,$classe="",$tag="div") {
 
 
 function logga ($medico,$azione,$paziente="") {
+    global $mysqli;
 	$adesso=time();
 	$query = ("INSERT INTO log
 		(timestamp,medico,azione,paziente)
 		VALUES
 		('$adesso','$medico','$azione','$paziente')
 		");
-	$result = mysql_query ($query) or die (mysql_error());
+   if (!$result = $mysqli->query($query)) echo "Query error";
 	}
 
 
 function medico ($ts) {
+    global $mysqli;
 	$tsquery="SELECT cognome FROM medici WHERE cod_ts=$ts";
-	$tsresult=mysql_query ($tsquery);
-	$medarray=mysql_fetch_row($tsresult);
+    if (!$tsresult = $mysqli->query($tsquery)) echo "Query error";
+	$medarray=mysqli_fetch_row($tsresult);
 	$medico=$medarray[0];
 	return ($medico);
 	}
@@ -102,10 +104,11 @@ function intestazione_report ($luogo) { //crea l'intestazione della tabella del 
 }
 
 function riga_report (&$luogo, $key) { //crea ogni riga della tabella del riassunto delle visite in stat.php
+    global $mysqli;
 	global $report_anno;
 	global $report_mese;
-	$q_mese=mysql_query ("SELECT id_visita FROM visite WHERE ((FROM_UNIXTIME(data,'%Y')='$report_anno') AND (FROM_UNIXTIME(data,'%c')='$report_mese') AND (luogo='$luogo'))");
-	$numerovisite=mysql_num_rows ($q_mese);
+    if (!$q_mese = $mysqli->query("SELECT id_visita FROM visite WHERE ((FROM_UNIXTIME(data,'%Y')='$report_anno') AND (FROM_UNIXTIME(data,'%c')='$report_mese') AND (luogo='$luogo'))")) echo "Query error";
+	$numerovisite=mysqli_num_rows ($q_mese);
 	echo "<td>$numerovisite</td>";
 }
 

@@ -12,15 +12,15 @@ if(!get_magic_quotes_gpc())
 	if (isset($_POST['submit']))
 	{	
 		$check = "SELECT cognome, password, cod_ts FROM medici WHERE cognome = '".$_POST['cognome']."'";
-		$result = mysql_query($check);
-		$num_rows = mysql_num_rows($result);
+        if (!$result = $mysqli->query($check)) echo "Query error";
+		$num_rows = mysqli_num_rows($result);
 	
 		if (!($num_rows))		
 		{
 			die('Utente non riconosciuto');
 		}
 
-		$info = mysql_fetch_Array($result);
+		$info = mysqli_fetch_Array($result);
 	
 		// controlla password
 
@@ -31,7 +31,7 @@ if(!get_magic_quotes_gpc())
 
 		$ts = time();
 
-		$update_login = mysql_query("UPDATE medici SET cod_ts = '$ts' WHERE cognome = '".$_POST['cognome']."'");
+        if (!$update_login = $mysqli->query("UPDATE medici SET cod_ts = '$ts' WHERE cognome = '".$_POST['cognome']."'")) echo "Query error";
 
 		//log
 		logga ($_POST['cognome'],"login"); 

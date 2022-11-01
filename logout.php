@@ -3,12 +3,12 @@
 
 require("testa.php");
 
-$ts=$_GET[ts];
+$ts=$_GET['ts'];
 
 $medico=medico($ts);
 
 $tsquery="UPDATE medici SET cod_ts='0' WHERE cod_ts=$ts";
-$tsresult=mysql_query ($tsquery);
+if (!$tsresult = $mysqli->query($tsquery)) echo "Query error";
 
 if ($tsresult) {
 	scrivi ("Sessione terminata correttamente","corretto");
@@ -16,10 +16,10 @@ if ($tsresult) {
 	}
 else scrivi ("Attenzione! Sessione non terminata correttamente!","errore");
 
-mysql_close($conn);
+mysqli_close($mysqli);
 
 //Esegui il backup del database con phpmysqlautobackup
-if ($_GET[backup]=="si") include ("phpmysqlautobackup/run.php");
+if ($_GET['backup']=="si") include ("phpmysqlautobackup/run.php");
 
 ?>
 

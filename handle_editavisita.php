@@ -19,7 +19,7 @@ require ("funzioni.inc.php");
 
 extract($_POST);
 
-mysql_set_charset('utf8');
+$mysqli->set_charset("utf8");
 
 //riconverti data in timestamp
 $giorno=substr($data,0,2);
@@ -28,14 +28,14 @@ $anno=substr($data,6,4);
 $datats=mktime(0,0,0,$mese,$giorno,$anno);
 
 //escape quotes
-$terapia_atto=mysql_real_escape_string($terapia_atto);
-$diario=mysql_real_escape_string($diario);
-$eon=mysql_real_escape_string($eon);
-$terapia_data=mysql_real_escape_string($terapia_data);
+$terapia_atto = mysqli_real_escape_string ($mysqli, $terapia_atto);
+$diario = mysqli_real_escape_string ($mysqli, $diario);
+$eon = mysqli_real_escape_string ($mysqli, $eon);
+$terapia_data = mysqli_real_escape_string ($mysqli, $terapia_data);
 
 $query = ("UPDATE visite SET data='$datats',luogo='$luogo',terapia_atto='$terapia_atto',diario='$diario',eon='$eon',terapia_data='$terapia_data',medico='$medico' WHERE id_visita='$idvisita' ");
 
-$result = mysql_query ($query) or die (mysql_error());
+if (!$result = $mysqli->query($query)) echo "Query error";
 if ($result == 1) scrivi ("Visita modificata correttamente, chiudere questa finestra e ricaricare la pagina principale!","corretto");
 else scrivi ("Errore durante la modifica della visita!","errore");
 

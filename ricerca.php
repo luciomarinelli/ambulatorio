@@ -4,7 +4,7 @@ require("testa.php");
 
 require("controllo.inc.php");
 
-$criteri=array(); //crea array dove appendere i criteri di ricerca della query
+$criteri = array(); //crea array dove appendere i criteri di ricerca della query
 
 // per ciascun campo verifica la validità e crea una chiave omonima nell'array $criteri
 if (is_numeric($_POST['eta_min'])) {
@@ -88,11 +88,11 @@ if ($rconta>0) {
 			}
 		}
 	$query="SELECT * FROM anagrafica INNER JOIN anamnesipd ON anagrafica.idpz = anamnesipd.idpz WHERE $rquery ORDER BY cognome";
-	$result = mysql_query ($query) or die (mysql_error());
+	if (!$result = $mysqli->query($query)) echo "Query error";
 	echo "<table>";
-	$pz_trovati=mysql_num_rows($result);
+	$pz_trovati=mysqli_num_rows($result);
 	echo "<tr><th>Con questi criteri di ricerca i pazienti trovati sono: ".$pz_trovati."</th></tr>";
-	while ($riga = mysql_fetch_assoc($result)) {
+	while ($riga = mysqli_fetch_assoc($result)) {
 		echo "<tr><td><a href=\"mod_pz.php?idpz=".$riga['idpz']."&amp;ts=$ts\">".$riga['cognome']." ".$riga['nome']."</a></td></tr>\n";
 		}
 	echo "</table>";

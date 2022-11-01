@@ -20,13 +20,13 @@ extract($_POST);
 
 if ($opera=="insert") {
     $query = ("INSERT INTO hy (id_visita,stage)	VALUES ('$id','$rate')");
-    $result = mysql_query ($query) or die (mysql_error());
+    if (!$result = $mysqli->query($query)) echo "Query error";
     if ($result == 1) scrivi ("Scala inserita correttamente, chiudere la finestra","corretto");
     else scrivi ("Errore durante l'inserimento della scala!","errore");
     }
 else {
     $query = ("UPDATE hy SET stage='$rate' WHERE id_visita='$id' ");
-    $result = mysql_query ($query) or die (mysql_error());
+    if (!$result = $mysqli->query($query)) echo "Query error";
     if ($result == 1) scrivi ("Scala aggiornata correttamente, chiudere la finestra","corretto");
     else scrivi ("Errore durante l'aggiornamento della scala!","errore");
     }

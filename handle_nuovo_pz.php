@@ -24,18 +24,18 @@ if (sizeof($r->errori)){
 }		  
 
 //escape quotes
-$cognome=mysql_real_escape_string($cognome);
-$nome=mysql_real_escape_string($nome);
-$nascita_data=mysql_real_escape_string($nascita_data);
-$nascita_luogo=mysql_real_escape_string($nascita_luogo);
-$asl=mysql_real_escape_string($asl);
-$telefoni=mysql_real_escape_string($telefoni);
-$email=mysql_real_escape_string($email);
-$domicilio=mysql_real_escape_string($domicilio);
-$professione=mysql_real_escape_string($professione);
-$statocivile=mysql_real_escape_string($statocivile);
-$diagnosi=mysql_real_escape_string($diagnosi);
-$note=mysql_real_escape_string($note);
+$cognome = mysqli_real_escape_string ($mysqli, $cognome);
+$nome = mysqli_real_escape_string ($mysqli, $nome);
+$nascita_data = mysqli_real_escape_string ($mysqli, $nascita_data);
+$nascita_luogo = mysqli_real_escape_string ($mysqli, $nascita_luogo);
+$asl = mysqli_real_escape_string ($mysqli, $asl);
+$telefoni = mysqli_real_escape_string ($mysqli, $telefoni);
+$email = mysqli_real_escape_string ($mysqli, $email);
+$domicilio = mysqli_real_escape_string ($mysqli, $domicilio);
+$professione = mysqli_real_escape_string ($mysqli, $professione);
+$statocivile = mysqli_real_escape_string ($mysqli, $statocivile);
+$diagnosi = mysqli_real_escape_string ($mysqli, $diagnosi);
+$note = mysqli_real_escape_string ($mysqli, $note);
 
 //Capitalizza nome, cognome, comune
 $cognome=ucwords($cognome);
@@ -50,14 +50,14 @@ $query = ("INSERT INTO anagrafica
 	VALUES
 	('$cognome','$nome','$nascita_data','$nascita_luogo','$sesso','$cf','$asl','$telefoni','$email','$domicilio','$professione','$statocivile','$diagnosi','$note',NOW())
 	");
-$result = mysql_query ($query) or die (mysql_error());
+if (!$result = $mysqli->query($query)) echo "Query error";
 if ($result == 1) {
 	scrivi ('Paziente inserito correttamente','corretto');
 	
 	//recupera ultimo idpz generato dall'inserimento
 	$qauto="SELECT LAST_INSERT_ID( )";
-	$rauto=mysql_query($qauto);
-	$ultimoauto=mysql_fetch_row($rauto);
+    if (!$rauto = $mysqli->query($qauto)) echo "Query error";
+	$ultimoauto=mysqli_fetch_row($rauto);
 	
 	//log
 	logga ($medico,"Inserito paziente",$ultimoauto[0]);

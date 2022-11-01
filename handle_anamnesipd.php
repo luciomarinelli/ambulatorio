@@ -21,23 +21,27 @@ extract($_POST);
 $interapia_data=invertidata($interapia_data);
 
 //escape quotes
-$familia=mysql_real_escape_string($familia);
-$esordio_eta=mysql_real_escape_string($esordio_eta);
-$esordio_sede_txt=mysql_real_escape_string($esordio_sede_txt);
-$interapia_data=mysql_real_escape_string($interapia_data);
-$comorbilita=mysql_real_escape_string($comorbilita);
-$compli_altro=mysql_real_escape_string($compli_altro);
-$compli_allu=mysql_real_escape_string($compli_allu);
-$compli_sonno=mysql_real_escape_string($compli_sonno);
-$compli_cogni=mysql_real_escape_string($compli_cogni);
-$compli_vegeta=mysql_real_escape_string($compli_vegeta);
-$esami=mysql_real_escape_string($esami);
+$familia = mysqli_real_escape_string ($mysqli, $familia);
+$esordio_eta = mysqli_real_escape_string ($mysqli, $esordio_eta);
+$esordio_sede_txt = mysqli_real_escape_string ($mysqli, $esordio_sede_txt);
+$interapia_data = mysqli_real_escape_string ($mysqli, $interapia_data);
+$comorbilita = mysqli_real_escape_string ($mysqli, $comorbilita);
+$compli_altro = mysqli_real_escape_string ($mysqli, $compli_altro);
+$compli_allu = mysqli_real_escape_string ($mysqli, $compli_allu);
+$compli_sonno = mysqli_real_escape_string ($mysqli, $compli_sonno);
+$compli_cogni = mysqli_real_escape_string ($mysqli, $compli_cogni);
+$compli_vegeta = mysqli_real_escape_string ($mysqli, $compli_vegeta);
+$esami = mysqli_real_escape_string ($mysqli, $esami);
 
 
 if ($opera=="insert") {
 
-    $query = ("INSERT INTO anamnesipd (idpz,familia,esordio_eta,esordio_sede,esordio_sede_txt,esordio_tipo,interapia_data,interapia_tipo,comorbilita,compli_onoff,compli_delon,compli_woff,compli_dysk,compli_altro,compli_allu,compli_sonno,compli_cogni,compli_vegeta,esami,cadute) VALUES ('$idpz','$familia','$esordio_eta','$esordio_sede','$esordio_sede_txt','$esordio_tipo','$interapia_data','$interapia_tipo','$comorbilita','$compli_onoff','$compli_delon','$compli_woff','$compli_dysk','$compli_altro','$compli_allu','$compli_sonno','$compli_cogni','$compli_vegeta','$esami','$cadute')");
-    $result = mysql_query ($query) or die (mysql_error());
+// l'uso di IGNORE evita errori in mancanza di valori nei campi numerici ma inserisce automaticamente gli 0
+
+    $query = ("INSERT IGNORE INTO anamnesipd (idpz,familia,esordio_eta,esordio_sede,esordio_sede_txt,esordio_tipo,interapia_data,interapia_tipo,comorbilita,compli_onoff,compli_delon,compli_woff,compli_dysk,compli_altro,compli_allu,compli_sonno,compli_cogni,compli_vegeta,esami,cadute) VALUES ('$idpz','$familia','$esordio_eta','$esordio_sede','$esordio_sede_txt','$esordio_tipo','$interapia_data','$interapia_tipo','$comorbilita','$compli_onoff','$compli_delon','$compli_woff','$compli_dysk','$compli_altro','$compli_allu','$compli_sonno','$compli_cogni','$compli_vegeta','$esami','$cadute')");
+//DEBUG
+
+    if (!$result = $mysqli->query($query)) echo "Query error";    
     if ($result == 1) {
 	scrivi ("Anamnesi inserita correttamente, chiudere la finestra","corretto");
 	logga ($medico,"anamnesipd inserita",$idpz);
@@ -45,8 +49,8 @@ if ($opera=="insert") {
     else scrivi ("Errore durante l'inserimento dell'anamnesi!","errore");
     }
 else {
-    $query = ("UPDATE anamnesipd SET familia='$familia',esordio_eta='$esordio_eta',esordio_sede='$esordio_sede',esordio_sede_txt='$esordio_sede_txt',esordio_tipo='$esordio_tipo',interapia_data='$interapia_data',interapia_tipo='$interapia_tipo',comorbilita='$comorbilita',compli_onoff='$compli_onoff',compli_delon='$compli_delon',compli_woff='$compli_woff',compli_dysk='$compli_dysk',compli_altro='$compli_altro',compli_allu='$compli_allu',compli_sonno='$compli_sonno',compli_cogni='$compli_cogni',compli_vegeta='$compli_vegeta',esami='$esami',cadute='$cadute' WHERE idpz='$idpz' ");
-    $result = mysql_query ($query) or die (mysql_error());
+    $query = ("UPDATE IGNORE anamnesipd SET familia='$familia',esordio_eta='$esordio_eta',esordio_sede='$esordio_sede',esordio_sede_txt='$esordio_sede_txt',esordio_tipo='$esordio_tipo',interapia_data='$interapia_data',interapia_tipo='$interapia_tipo',comorbilita='$comorbilita',compli_onoff='$compli_onoff',compli_delon='$compli_delon',compli_woff='$compli_woff',compli_dysk='$compli_dysk',compli_altro='$compli_altro',compli_allu='$compli_allu',compli_sonno='$compli_sonno',compli_cogni='$compli_cogni',compli_vegeta='$compli_vegeta',esami='$esami',cadute='$cadute' WHERE idpz='$idpz' ");
+    if (!$result = $mysqli->query($query)) echo "Query error";    
     if ($result == 1) {
 	scrivi ("Anamnesi aggiornata correttamente, chiudere la finestra","corretto");
 	logga ($medico,"anamnesipd aggiornata",$idpz);

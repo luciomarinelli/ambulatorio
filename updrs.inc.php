@@ -3,12 +3,12 @@
 //scala UPDRS
 
 $qscala="SELECT * FROM updrs WHERE id_visita='$id'";
-$result_qscala = mysql_query ($qscala) or die (mysql_error());
-$scalapresente=mysql_num_rows($result_qscala);
+if (!$result_qscala = $mysqli->query($qscala)) echo "Query error";
+$scalapresente=mysqli_num_rows($result_qscala);
 if ($scalapresente==1) {
 	$opera="update";
 
-	$scala=mysql_fetch_assoc($result_qscala);
+	$scala=mysqli_fetch_assoc($result_qscala);
 	extract($scala); //produce le variabili $q1, $q2, ecc
 
 	//calcola subtotali e totale
@@ -34,8 +34,8 @@ if ($scalapresente==1) {
 
 else {
 	$qprecedente="SELECT * FROM updrs WHERE id_visita=(SELECT max(visite.id_visita) FROM updrs LEFT JOIN visite ON updrs.id_visita = visite.id_visita WHERE idpz='$idpz' GROUP BY idpz)"; //solo a partire da versione 4.1 di MySQL
-	$rqprecedente= mysql_query ($qprecedente) or die (mysql_error());
-	if ($precedente=mysql_fetch_assoc($rqprecedente)) {
+    if (!$rqprecedente = $mysqli->query($qprecedente)) echo "Query error";
+	if ($precedente=mysqli_fetch_assoc($rqprecedente)) {
 		extract($precedente);
 		echo "Scala precompilata con i valori dell'ultima visita";
 	}

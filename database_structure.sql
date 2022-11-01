@@ -1,11 +1,12 @@
+-- REMEMBER TO ADD USERS in TABLE 'medici' !
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
+--
+-- Struttura della tabella `anagrafica`
+--
 
 CREATE TABLE `anagrafica` (
   `idpz` int(11) NOT NULL,
@@ -27,6 +28,11 @@ CREATE TABLE `anagrafica` (
   `ultima_visita` date NOT NULL DEFAULT '2000-01-01',
   `decesso` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+--
+-- Struttura della tabella `anamnesipd`
+--
 
 CREATE TABLE `anamnesipd` (
   `idpz` int(11) NOT NULL DEFAULT '0',
@@ -51,10 +57,20 @@ CREATE TABLE `anamnesipd` (
   `cadute` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+--
+-- Struttura della tabella `hy`
+--
+
 CREATE TABLE `hy` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
   `stage` decimal(2,1) NOT NULL DEFAULT '0.0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+--
+-- Struttura della tabella `listanamnesi`
+--
 
 CREATE TABLE `listanamnesi` (
   `id` tinyint(4) NOT NULL DEFAULT '0',
@@ -62,11 +78,23 @@ CREATE TABLE `listanamnesi` (
   `descrizione` varchar(40) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `listascale`
+--
+
 CREATE TABLE `listascale` (
   `id` tinyint(4) NOT NULL DEFAULT '0',
   `link` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
   `descrizione` varchar(40) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `log`
+--
 
 CREATE TABLE `log` (
   `id` int(11) NOT NULL,
@@ -76,11 +104,29 @@ CREATE TABLE `log` (
   `paziente` varchar(16) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+--
+-- Struttura della tabella `medici`
+--
+
 CREATE TABLE `medici` (
   `cognome` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
   `cod_ts` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dump dei dati per la tabella `medici`
+-- ADD/UPDATE USERNAMES AND PASSWORD HERE!!!   <<<<<----------------
+
+INSERT INTO `medici` (`cognome`, `password`, `cod_ts`) VALUES
+('USER1', 'PASSWORD1', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `mmse`
+--
 
 CREATE TABLE `mmse` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
@@ -106,11 +152,22 @@ CREATE TABLE `mmse` (
   `disegno` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+--
+-- Struttura della tabella `phpmysqlautobackup`
+--
+
 CREATE TABLE `phpmysqlautobackup` (
   `id` int(11) NOT NULL,
   `version` varchar(6) COLLATE utf8_unicode_ci DEFAULT NULL,
   `time_last_run` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `updrs`
+--
 
 CREATE TABLE `updrs` (
   `id_visita` int(11) NOT NULL DEFAULT '0',
@@ -172,6 +229,11 @@ CREATE TABLE `updrs` (
   `q42` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+
+--
+-- Struttura della tabella `visite`
+--
+
 CREATE TABLE `visite` (
   `id_visita` int(11) NOT NULL,
   `idpz` int(11) NOT NULL,
@@ -185,46 +247,73 @@ CREATE TABLE `visite` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci PACK_KEYS=0;
 
 
+--
+-- Indici per le tabelle scaricate
+--
+
+--
+-- Indici per le tabelle `anagrafica`
+--
 ALTER TABLE `anagrafica`
   ADD UNIQUE KEY `idpz` (`idpz`);
 
+--
+-- Indici per le tabelle `anamnesipd`
+--
 ALTER TABLE `anamnesipd`
   ADD UNIQUE KEY `idpz` (`idpz`);
 
+--
+-- Indici per le tabelle `hy`
+--
 ALTER TABLE `hy`
   ADD UNIQUE KEY `id_visita` (`id_visita`);
 
+--
+-- Indici per le tabelle `listanamnesi`
+--
 ALTER TABLE `listanamnesi`
   ADD UNIQUE KEY `id` (`id`);
 
+--
+-- Indici per le tabelle `listascale`
+--
 ALTER TABLE `listascale`
   ADD UNIQUE KEY `id` (`id`);
 
+--
+-- Indici per le tabelle `log`
+--
 ALTER TABLE `log`
   ADD UNIQUE KEY `id` (`id`);
 
+--
+-- Indici per le tabelle `medici`
+--
 ALTER TABLE `medici`
   ADD UNIQUE KEY `cognome` (`cognome`);
 
+--
+-- Indici per le tabelle `mmse`
+--
 ALTER TABLE `mmse`
   ADD UNIQUE KEY `id_visita` (`id_visita`);
 
+--
+-- Indici per le tabelle `phpmysqlautobackup`
+--
 ALTER TABLE `phpmysqlautobackup`
   ADD PRIMARY KEY (`id`);
 
+--
+-- Indici per le tabelle `updrs`
+--
 ALTER TABLE `updrs`
   ADD UNIQUE KEY `id_visita` (`id_visita`);
 
+--
+-- Indici per le tabelle `visite`
+--
 ALTER TABLE `visite`
   ADD PRIMARY KEY (`id_visita`);
 
-
-ALTER TABLE `anagrafica`
-  MODIFY `idpz` int(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-ALTER TABLE `visite`
-  MODIFY `id_visita` int(11) NOT NULL AUTO_INCREMENT;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

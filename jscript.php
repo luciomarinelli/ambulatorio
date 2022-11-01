@@ -6,16 +6,13 @@ require ("funzioni.inc.php");
 
 unset($_POST); //altrimenti non funziona il POST all'interno del popup...
 
+//MANCA PROTEZIONE INJECTION!!
 $scalalink=$_GET['scala']; //nome tabella e file da includere della scala
 $id=$_GET['id']; //numero della visita, di conseguenza unico anche per il paziente
 $idpz=$_GET['idpz']; //codice fiscale serve per la query x mettere di default i valori dell'ultima updrs
 
-//ottieni descrizione della scala prescelta
-$qlistascale="SELECT * FROM listascale WHERE link='$scalalink'";
-$result_qlistascale=mysql_query($qlistascale) or die (mysql_error());
-$scala=mysql_fetch_assoc($result_qlistascale);
-$scalalong=$scala['descrizione'];
-$filescala=$scala['link'].".inc.php";
+$scalalong=$listascale [$scalalink]; //ottieni descrizione della scala prescelta
+$filescala=$scalalink.".inc.php";
 ?>
 
 <html>

@@ -1,8 +1,11 @@
 Changelist
 
-*NEW RELEASE*
-- lesser code cleanup
+20221101
+- updated PHP syntax and functions to comply with PHP versions since 7.0.0
 - corrected bug in SQL query generating notice about last time inserted/changed anamnesipd
+- the list of "anamnesi" and clinical scales is no longer within the database but in the config.inc.php: please configure the new config.inc.php and remove the "listanamnesi" and "listascale" tables during upgrades!
+- updated database_structure.sql
+- minor code cleanup
 
 20180331
 - Updated phpMySQLAutoBackup to version 1.6.3 (refer to http://dwalker.co.uk/phpmysqlautobackup/ )

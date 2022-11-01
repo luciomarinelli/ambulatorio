@@ -8,19 +8,20 @@ extract ($_POST);
 $nascita_data=invertidata($nascita_data);
 
 //escape quotes
-$cognome=mysql_real_escape_string($cognome);
-$nome=mysql_real_escape_string($nome);
-$nascita_data=mysql_real_escape_string($nascita_data);
-$nascita_luogo=mysql_real_escape_string($nascita_luogo);
-$cf=mysql_real_escape_string($cf);
-$asl=mysql_real_escape_string($asl);
-$telefoni=mysql_real_escape_string($telefoni);
-$email=mysql_real_escape_string($email);
-$domicilio=mysql_real_escape_string($domicilio);
-$professione=mysql_real_escape_string($professione);
-$statocivile=mysql_real_escape_string($statocivile);
-$diagnosi=mysql_real_escape_string($diagnosi);
-$note=mysql_real_escape_string($note);
+$cognome = mysqli_real_escape_string ($mysqli, $cognome);
+$nome = mysqli_real_escape_string ($mysqli, $nome);
+$nascita_data = mysqli_real_escape_string ($mysqli, $nascita_data);
+$nascita_luogo = mysqli_real_escape_string ($mysqli, $nascita_luogo);
+$cf = mysqli_real_escape_string ($mysqli, $cf);
+$asl = mysqli_real_escape_string ($mysqli, $asl);
+$telefoni = mysqli_real_escape_string ($mysqli, $telefoni);
+$email = mysqli_real_escape_string ($mysqli, $email);
+$domicilio = mysqli_real_escape_string ($mysqli, $domicilio);
+$professione = mysqli_real_escape_string ($mysqli, $professione);
+$statocivile = mysqli_real_escape_string ($mysqli, $statocivile);
+$diagnosi = mysqli_real_escape_string ($mysqli, $diagnosi);
+$note = mysqli_real_escape_string ($mysqli, $note);
+if (!$decesso == 1) $decesso = 0;
 
 //Aggiorna dati DB
 $query = ("UPDATE anagrafica SET
@@ -40,7 +41,8 @@ $query = ("UPDATE anagrafica SET
 	note='$note',
 	decesso='$decesso'
 	WHERE idpz='$idpz' ");
-$result = mysql_query ($query) or die (mysql_error());
+
+if (!$result = $mysqli->query($query)) echo "Query error";
 if ($result == 1) {
 	scrivi ("Anagrafica aggiornata correttamente","corretto");
 	logga ($medico,"Anagrafica aggiornata",$idpz);

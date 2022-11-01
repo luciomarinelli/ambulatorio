@@ -3,17 +3,17 @@
 //scala di Hoehn & Yahr
 
 $qscala="SELECT * FROM hy WHERE id_visita='$id'";
-$result_qscala = mysql_query ($qscala) or die (mysql_error());
-$scalapresente=mysql_num_rows($result_qscala);
-$scala=mysql_fetch_assoc($result_qscala);
+if (!$result_qscala = $mysqli->query($qscala)) echo "Query error";
+$scalapresente=mysqli_num_rows($result_qscala);
+$scala=mysqli_fetch_assoc($result_qscala);
 if ($scalapresente==1) {
     $rate=$scala['stage'];
     $opera="update";
   }
 else {
 	$qprecedente="SELECT * FROM hy WHERE id_visita=(SELECT max(visite.id_visita) FROM hy LEFT JOIN visite ON hy.id_visita = visite.id_visita WHERE idpz='$idpz' GROUP BY idpz)"; //solo a partire da versione 4.1 di MySQL
-	$rqprecedente= mysql_query ($qprecedente) or die (mysql_error());
-	if ($precedente=mysql_fetch_assoc($rqprecedente)) {
+    if (!$rqprecedente= $mysqli->query($qprecedente)) echo "Query error";
+	if ($precedente=mysqli_fetch_assoc($rqprecedente)) {
 		$rate=$precedente['stage'];
 		echo "Scala precompilata con i valori dell'ultima visita";
 	}

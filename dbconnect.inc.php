@@ -1,14 +1,12 @@
 <?php
 
-$conn = mysql_connect($dbhost,$dbuser,$dbpass)
-or die("Unable to connect to MySQL server!");
+//connect to database
+$mysqli = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+if ($mysqli->connect_errno) echo "DB connection error";
 
-mysql_select_db($dbname,$conn)
-or die("Unable to select $dbname database!");
+if (!$result = $mysqli->query("SET NAMES 'UTF8'")) echo "Query error";
 
-mysql_query ("SET NAMES 'UTF8'");
-
-mysql_set_charset('utf8');
+$mysqli->set_charset("utf8");
 
 ?>
 

@@ -1,15 +1,15 @@
 <?php
 
 //nella pagina di ricerca il ts non è trasmesso tramite GET ma tramite POST
-if (isset($_POST[ts])) $_GET[ts]=$_POST[ts];
+if (isset($_POST['ts'])) $_GET['ts']=$_POST['ts'];
 
 //controllo autenticazione
 
-if (!isset($_GET[ts]) || $_GET[ts]==0)  {
+if (!isset($_GET['ts']) || $_GET['ts']==0)  {
 	scrivi('Accesso non autorizzato','errore');
 	exit();
 	}
-$ts=$_GET[ts];
+$ts=$_GET['ts'];
 $medico=medico($ts);
 
 if($medico!=NULL) {

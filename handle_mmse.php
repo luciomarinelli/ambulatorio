@@ -19,15 +19,15 @@ require ("funzioni.inc.php");
 extract($_POST);
 
 if ($opera=="insert") {
-    $query = ("INSERT INTO mmse (id_visita,anno,stagione,mese,gmese,gsett,stato,regione,citta,luogo,piano,capaga,tentativi,calcolo,richiamo,oggetti,ripeti,compito,occhichiusi,frase,disegno)
+    $query = ("INSERT IGNORE INTO mmse (id_visita,anno,stagione,mese,gmese,gsett,stato,regione,citta,luogo,piano,capaga,tentativi,calcolo,richiamo,oggetti,ripeti,compito,occhichiusi,frase,disegno)
     VALUES ('$id','$anno','$stagione','$mese','$gmese','$gsett','$stato','$regione','$citta','$luogo','$piano','$capaga','$tentativi','$calcolo','$richiamo','$oggetti','$ripeti','$compito','$occhichiusi','$frase','$disegno')");
-    $result = mysql_query ($query) or die (mysql_error());
+    if (!$result = $mysqli->query($query)) echo "Query error";
     if ($result == 1) scrivi ("Scala inserita correttamente, chiudere la finestra","corretto");
     else scrivi ("Errore durante l'inserimento della scala!","errore");
     }
 else {
-    $query = ("UPDATE updrs SET anno='$anno',stagione='$stagione',mese='$mese',gmese='$gmese',gsett='$gsett',stato='$stato',regione='$regione',citta='$citta',luogo='$luogo',piano='$piano',capaga='$capaga',tentativi='$tentativi',calcolo='$calcolo',richiamo='$richiamo',oggetti='$oggetti',ripeti='$ripeti',compito='$compito',occhichiusi='$occhichiusi',frase='$frase',disegno='$disegno' WHERE id_visita='$id' ");
-    $result = mysql_query ($query) or die (mysql_error());
+    $query = ("UPDATE IGNORE updrs SET anno='$anno',stagione='$stagione',mese='$mese',gmese='$gmese',gsett='$gsett',stato='$stato',regione='$regione',citta='$citta',luogo='$luogo',piano='$piano',capaga='$capaga',tentativi='$tentativi',calcolo='$calcolo',richiamo='$richiamo',oggetti='$oggetti',ripeti='$ripeti',compito='$compito',occhichiusi='$occhichiusi',frase='$frase',disegno='$disegno' WHERE id_visita='$id' ");
+    if (!$result = $mysqli->query($query)) echo "Query error";
     if ($result == 1) scrivi ("Scala aggiornata correttamente, chiudere la finestra","corretto");
     else scrivi ("Errore durante l'aggiornamento della scala!","errore");
     }
